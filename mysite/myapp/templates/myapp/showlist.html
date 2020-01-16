@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% for letter in letters.all %}
+    <h1>{{letter.title}}</h1>
+    <p>{{letter.pub_date}}</p>
+    <p>{{letter.summary}}<a href="{% url 'read' letter.id %}">...more</a></p>
+{% endfor %}
+
+
+{% endblock %}
