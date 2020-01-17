@@ -1,3 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
 <h1>title : {{letter.title}}</h1>
 <p>date : {{letter.pub_date}}</p>
 <p>body : {{letter.body}}</p>
+
+<a href="{% url 'letterupdate' letter.id %}">수정하기</a>
+<a href="{% url 'letterdelete' letter.id %}" onclick="return confirm('정말 삭제하시겠습니까?')">삭제하기</a>
+{% endblock %}
