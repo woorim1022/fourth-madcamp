@@ -6,4 +6,19 @@
 
 <a href="{% url 'letterupdate' letter.id %}">수정하기</a>
 <a href="{% url 'letterdelete' letter.id %}" onclick="return confirm('정말 삭제하시겠습니까?')">삭제하기</a>
+
+
+<br/>
+<a href="{% url 'commentcreate' letter.id %}">답장하기</a>
+<form method='POST'>
+    {% csrf_token %}
+    {{form}}
+    <button type='submit'>답장 보내기</button>
+</form>
+
+<br/>
+<h4>답장 목록</h4>
+    {% for comment in letter.comment_set.all %}
+        {{ comment.content }}<br/>
+    {% endfor %}
 {% endblock %}

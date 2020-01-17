@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Letter
-from .forms import LetterForm
+from .forms import LetterForm, CommentForm
 # Create your views here.
 
 def home(request):
@@ -51,3 +51,18 @@ def letterdelete(request, letter_id):
     letter = get_object_or_404(Letter, pk = letter_id)
     letter.delete() # Post DB에서 post 객체 삭제
     return redirect('showlist')
+
+def commentcreate(request, letter_id):
+    letter = get_object_or_404(Letter, pk=letter_id)
+    if request.method=='POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.letter = letter
+            comment.save()
+            return redirect('read', letter_id=letter.pk)
+        else:
+            redirect('showlist')
+    else:
+        form = CommentForm()
+        return render(request, 'myapp/read.html', {'form': form, 'letter': letter})
