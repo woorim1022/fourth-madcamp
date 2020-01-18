@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
+
 <h1>title : {{letter.title}}</h1>
+<p>조회수 : {{letter.letter_hit}}</p>
 <p>date : {{letter.pub_date}}</p>
 <p>body : {{letter.body}}</p>
 
@@ -9,6 +11,8 @@
 
 
 <br/>
+<br/>
+<br/>
 <a href="{% url 'commentcreate' letter.id %}">답장하기</a>
 <form method='POST'>
     {% csrf_token %}
@@ -16,6 +20,7 @@
     <button type='submit'>답장 보내기</button>
 </form>
 
+<br/>
 <br/>
 <h4>답장 목록</h4>
     {% for comment in letter.comment_set.all %}

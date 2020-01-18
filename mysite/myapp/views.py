@@ -8,13 +8,14 @@ def home(request):
 
 
 def showlist(request):
-    letters = Letter.objects
+    letters = Letter.objects.filter(writer=request.user)
     return render(request, 'myapp/showlist.html', {'letters' : letters})
 
     
-def read(request, letter_id):
+def detail(request, letter_id):
     letter_detail = get_object_or_404(Letter, pk = letter_id) 
-    return render(request, 'myapp/read.html', {'letter':letter_detail})
+    letter_detail.update_counter
+    return render(request, 'myapp/detail.html', {'letter':letter_detail})
 
 def write(request):
     return render(request, 'myapp/write.html')
@@ -27,6 +28,7 @@ def lettercreate(request):
         form = LetterForm(request.POST) # 입력된 내용들을 form이라는 변수에 저장
         if form.is_valid(): # form이 유효하다면(models.py에서 정의한 필드에 적합하다면)
             letter = form.save(commit=False) # form 데이터를 가져온다.
+            letter.writer = request.user
             letter.save() # form 데이터를 DB에 저장한다.
             return redirect('home')
     else: # GET 방식으로 요청이 들어왔을 때
