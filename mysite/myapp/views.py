@@ -14,7 +14,6 @@ def showlist(request):
     
 def detail(request, letter_id):
     letter_detail = get_object_or_404(Letter, pk = letter_id) 
-    letter_detail.update_counter
     mine = True
     return render(request, 'myapp/detail.html', {'letter':letter_detail, 'mine':mine})
 
@@ -72,6 +71,7 @@ def commentcreate(request, letter_id):
 
 def getrandom(request):
     letter = Letter.objects.order_by("?").first()
+    letter.update_counter
     mine = False
     while letter.writer == request.user:
         letter = Letter.objects.order_by("?").first()
