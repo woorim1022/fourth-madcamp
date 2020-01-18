@@ -14,7 +14,9 @@ def showlist(request):
     
 def detail(request, letter_id):
     letter_detail = get_object_or_404(Letter, pk = letter_id) 
-    mine = True
+    mine = False
+    if letter_detail.writer == request.user:
+        mine = True
     return render(request, 'myapp/detail.html', {'letter':letter_detail, 'mine':mine})
 
 def write(request):
@@ -56,6 +58,7 @@ def letterdelete(request, letter_id):
 
 def commentcreate(request, letter_id):
     letter = get_object_or_404(Letter, pk=letter_id)
+    mine = False
     if request.method=='POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -67,7 +70,7 @@ def commentcreate(request, letter_id):
             redirect('showlist')
     else:
         form = CommentForm()
-        return render(request, 'myapp/detail.html', {'form': form, 'letter': letter})
+        return render(request, 'myapp/detail.html', {'form': form, 'letter': letter, 'mine':mine})
 
 def getrandom(request):
     letter = Letter.objects.order_by("?").first()
