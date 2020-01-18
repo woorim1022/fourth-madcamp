@@ -10,4 +10,5 @@ urlpatterns = [
     path('letterupdate/<int:letter_id>', views.letterupdate, name='letterupdate'),
     path('letterdelete/<int:letter_id>', views.letterdelete, name='letterdelete'),
     path('commentcreate/<int:letter_id>', views.commentcreate, name='commentcreate'),
+    path('getrandom/', views.getrandom, name='getrandom'),
 ]

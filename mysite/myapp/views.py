@@ -15,7 +15,8 @@ def showlist(request):
 def detail(request, letter_id):
     letter_detail = get_object_or_404(Letter, pk = letter_id) 
     letter_detail.update_counter
-    return render(request, 'myapp/detail.html', {'letter':letter_detail})
+    mine = True
+    return render(request, 'myapp/detail.html', {'letter':letter_detail, 'mine':mine})
 
 def write(request):
     return render(request, 'myapp/write.html')
@@ -62,9 +63,16 @@ def commentcreate(request, letter_id):
             comment = form.save(commit=False)
             comment.letter = letter
             comment.save()
-            return redirect('read', letter_id=letter.pk)
+            return redirect('detail', letter_id=letter.pk)
         else:
             redirect('showlist')
     else:
         form = CommentForm()
-        return render(request, 'myapp/read.html', {'form': form, 'letter': letter})
+        return render(request, 'myapp/detail.html', {'form': form, 'letter': letter})
+
+def getrandom(request):
+    letter = Letter.objects.order_by("?").first()
+    mine = False
+    while letter.writer == request.user:
+        letter = Letter.objects.order_by("?").first()
+    return render(request, 'myapp/detail.html', {'letter': letter, 'mine':mine})
