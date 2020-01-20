@@ -3,13 +3,36 @@
 <html>
 <head>
 <title>새벽갬성전파</title>
+
+<script>    
+    //$(document.ready(function(){ .. });
+    $(function(){
+        $("#dialog").dialog();
+    });
+</script>
+
+</head>
+
 </head>
 
 <body>
 {% if user.is_authenticated %}
+    
+    {%if dialogwrite is True%}
+    <div id="dialog" title="알림">
+        오늘 이미 글을 작성하셨습니다.
+    </div>
+    {% else %}
     <a  href="{% url 'lettercreate' %}">글 쓰기</a><br>
+    {% endif %}
     <a  href="{% url 'showlist' %}">내 글들 보기</a><br>
     <a  href="{% url 'getrandom'  %}">다른사람이 보낸 글 보기</a><br>
+{% endif %}
+
+{%if dialog is True%}
+    <div id="dialog" title="알림">
+        오늘 이미 글을 세 번 읽으셨습니다.
+    </div>
 {% endif %}
 </body>
 

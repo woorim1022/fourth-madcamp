@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Letter, Myhit
+from .models import Letter, Myhit, Mywrite
 from .forms import LetterForm, CommentForm
 import datetime
 # Create your views here.
 
 def home(request):
-    return render(request, 'myapp/home.html')
+    return render(request, 'myapp/home.html', {'dialog':False, 'dialogwrite':False})
 
 
 def showlist(request):
@@ -36,8 +36,26 @@ def lettercreate(request):
             letter = form.save(commit=False) # form 데이터를 가져온다.
             letter.writer = request.user
             letter.save() # form 데이터를 DB에 저장한다.
-            return redirect('home')
+            return render(request, 'myapp/home.html', {'dialog':False, 'dialogwrite':True})
     else: # GET 방식으로 요청이 들어왔을 때
+        d = datetime.date.today()
+        dialogwrite = False
+        try:
+            mywrite = Mywrite.objects.get(user=request.user)
+        except: 
+            mywrite = Mywrite(user=request.user, writecount=0, date="0000-00-00 00:00:00")
+        date = str(mywrite.date)
+        today = d.isoformat() + " 00:00:00"
+        if date==today:
+            if mywrite.writecount == 1:
+                dialogwrite = True
+                return render(request, 'myapp/home.html', {'dialog': False , 'dialogwrite':dialogwrite})
+            else:
+                mywrite.writecount = mywrite.writecount + 1
+        else:
+            mywrite.date = today
+            mywrite.writecount = 1
+        mywrite.save()
         form = LetterForm()
         return render(request,'myapp/write.html', {'form': form})
 
@@ -69,7 +87,7 @@ def commentcreate(request, letter_id):
             comment = form.save(commit=False)
             comment.letter = letter
             comment.save()
-            return redirect('home')
+            return render(request, 'myapp/home.html', {'dialog':False, 'dialogwrite':False})
         else:
             redirect('showlist')
     else:
@@ -113,8 +131,9 @@ def getrandom(request):
         #hit 3이면
         if myhit.hit == 3:
             #접근불가
-            return redirect('home')
-
+            #다이얼로그 띄우기
+            dialog = True
+            return render(request, 'myapp/home.html', {'dialog':dialog, 'dialogwrite':False})
         #3미만이면
         else:
             #hit 1 증가
