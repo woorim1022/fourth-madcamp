@@ -422,29 +422,38 @@ input, button {
                         var weatherResult = "";
                         var icon = resp.weather[0].icon;
                         switch(icon) {
-                            case "01d": weatherResult = "clear day";
-                            case "01n": weatherResult = "clear night";
-                            case "02d": weatherResult = "clear day";
-                            case "02n": weatherResult = "clear night";
-                            case "03d": weatherResult = "cloudy day";
-                            case "03n": weatherResult = "cloudy night";
-                            case "04d": weatherResult = "cloudy day";
-                            case "04n": weatherResult = "cloudy night";
-                            case "09d": weatherResult = "rainy day";
-                            case "09n": weatherResult = "rainy night";
-                            case "10d": weatherResult = "rainy day";
-                            case "10n": weatherResult = "rainy night";
-                            case "11d": weatherResult = "rainy day";
-                            case "11n": weatherResult = "rainy night";
-                            case "13d": weatherResult = "snowy day";
-                            case "13n": weatherResult = "snowy night";
-                            case "50d": weatherResult = "cloudy day";
-                            case "50n": weatherResult = "cloudy night";
+                            case "01d": weatherResult = "clear day"; break;
+                            case "01n": weatherResult = "clear night"; break;
+                            case "02d": weatherResult = "clear day"; break;
+                            case "02n": weatherResult = "clear night"; break;
+                            case "03d": weatherResult = "cloudy day"; break;
+                            case "03n": weatherResult = "cloudy night"; break;
+                            case "04d": weatherResult = "cloudy day"; break;
+                            case "04n": weatherResult = "cloudy night"; break;
+                            case "09d": weatherResult = "rainy day"; break;
+                            case "09n": weatherResult = "rainy night"; break;
+                            case "10d": weatherResult = "rainy day"; break;
+                            case "10n": weatherResult = "rainy night"; break;
+                            case "11d": weatherResult = "rainy day"; break;
+                            case "11n": weatherResult = "rainy night"; break;
+                            case "13d": weatherResult = "snowy day"; break;
+                            case "13n": weatherResult = "snowy night"; break;
+                            case "50d": weatherResult = "cloudy day"; break;
+                            case "50n": weatherResult = "cloudy night"; break;
                         }
 
-                        jQuery("<h3></h3>").html("● 보여줄 날씨 : " + weatherResult).appendTo("body");
-                        if(weatherResult == "cloudy night") {
-                            document.body.style.backgroundImage = "url('{% static 'clear_night.jpg' %}')";
+                        //jQuery("<h3></h3>").html("● icon : " + resp.weather[0].icon).appendTo("body");
+                        //jQuery("<h3></h3>").html("● 보여줄 날씨 : " + weatherResult).appendTo("body");
+
+                        switch(weatherResult) {
+                          case "clear day": document.body.style.backgroundImage = "url('{% static 'clear_night.jpg' %}')"; break;
+                          case "clear night": document.body.style.backgroundImage = "url('{% static 'clear_night.jpg' %}')"; break;
+                          case "cloudy day": document.body.style.backgroundImage = "url('{% static 'cloudy_day.jpg' %}')"; break;
+                          case "cloudy night": document.body.style.backgroundImage = "url('{% static 'rainy_night.gif' %}')"; break;
+                          case "rainy day": document.body.style.backgroundImage = "url('{% static 'rainy_day.gif' %}')"; break;
+                          case "rainy night": document.body.style.backgroundImage = "url('{% static 'rainy_night.gif' %}')"; break;
+                          case "snowy day": document.body.style.backgroundImage = "url('{% static 'clear_night.jpg' %}')"; break;
+                          case "snowy night": document.body.style.backgroundImage = "url('{% static 'clear_night.jpg' %}')"; break;
                         }
 
                     }
