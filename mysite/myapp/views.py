@@ -47,7 +47,7 @@ def lettercreate(request):
         date = str(mywrite.date)
         today = d.isoformat() + " 00:00:00"
         if date==today:
-            if mywrite.writecount == 1:
+            if mywrite.writecount == 50:
                 dialogwrite = True
                 return render(request, 'myapp/home.html', {'dialog': False , 'dialogwrite':dialogwrite})
             else:
