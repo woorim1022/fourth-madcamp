@@ -1,17 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
-
-
 <div class="content">
   <div class="notebook-page">
-    <div class="text-edit"><{{letter.title}}<br/><br/>{{letter.body}}<br/>조회수 : {{letter.letter_hit}} <br/>{{letter.pub_date}}</div>
+    <div class="text-edit">{{letter.title}}<br/><br/>{{letter.body}}<br/>조회수 : {{letter.letter_hit}} <br/>{{letter.pub_date}}</div>
   </div>
-
-
 </div>
-
 
 <style>
 @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
@@ -135,29 +129,38 @@ $(document).ready(function() {
     showText("#msg", text, 0, 100);
   }, 2000);
 });
-
-
-
-
 </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
+<style>
+.edit {
+  position: relative;
+  width: 5%;
+  height: 2rem;
+  margin: 2rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  border-radius: 3rem;
+  cursor: pointer;
+  overflow: hidden;
+  transition: width 0.3s 0.15s, font-size 0.1s 0.15s;
+}
+.remove {
+  position: relative;
+  width: 5%;
+  height: 2rem;
+    margin: 2rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  border-radius: 3rem;
+  cursor: pointer;
+  overflow: hidden;
+  transition: width 0.3s 0.15s, font-size 0.1s 0.15s;
+}</style>
 
 
 {% if mine is True %}
-<a href="{% url 'letterupdate' letter.id %}">수정하기</a>
-<a href="{% url 'letterdelete' letter.id %}" onclick="return confirm('정말 삭제하시겠습니까?')">삭제하기</a>
+<a href="{% url 'letterupdate' letter.id %}" class="edit" >수정하기</a>
+<a href="{% url 'letterdelete' letter.id %}"  class="remove" onclick="return confirm('정말 삭제하시겠습니까?')" >삭제하기</a>
 {% endif %}
 
 <br/>

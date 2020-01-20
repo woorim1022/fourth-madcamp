@@ -23,6 +23,9 @@ def write(request):
 def reply(request):
     return render(request, 'myapp/reply.html')
 
+def intro(request):
+    return render(request, 'myapp/intro.html')
+
 def lettercreate(request):
     if request.method =='POST': # POST 방식으로 요청이 들어왔을 때
         form = LetterForm(request.POST) # 입력된 내용들을 form이라는 변수에 저장
