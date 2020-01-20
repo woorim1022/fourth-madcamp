@@ -2,14 +2,162 @@
 {% block content %}
 {% load staticfiles %}
 
-<h1>title : {{letter.title}}</h1>
-<p>조회수 : {{letter.letter_hit}}</p>
-<p>date : {{letter.pub_date}}</p>
-<p>body : {{letter.body}}</p>
-<a href = "{{letter.bgm}}">추천곡 들으러 가기</a>
 
-
-    
+<div class="content">
+    <div class="notebook-page">
+      <div class="text-edit">{{letter.title}}<br/><br/>{{letter.body}}<br/>조회수 : {{letter.letter_hit}} <br/>{{letter.pub_date}}</div>
+    </div>
+  </div>
+  
+  <style>
+  @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+  body {
+    background: #111;
+  
+  }
+  .text-edit{
+    font-family: 'Nanum Pen Script', cursive;
+      font-size: 28px;
+    min-height: 300px;
+    resize: none;
+    line-height: 1.75;
+    }
+  
+  .content {
+    margin: 3em auto;
+    max-width: 500px;
+  }
+  
+  .notebook-page {
+    padding: 70px 30px 20px 55px;
+    background-color: #fff;
+    background-image: linear-gradient(
+      rgba(33, 150, 243, 0.27) 0.05em,
+      transparent 0.05em
+    );
+    background-size: 100% 2em;
+    position: absolute;
+    top:10%;
+    left:60%;
+  
+    min-width:360px;
+    min-height: 300px;
+    box-shadow: 0 9px 20px rgba(0, 0, 0, 0.1);
+    &:after {
+      content: "";
+      position: absolute;
+      left: 10%;
+      top: 0;
+      width: 1px;
+      height: 100%;
+      background: #ef5350;
+    }
+    .text-edit {
+      display: none;
+    }
+  }
+  
+  textarea#msg {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 24px;
+    min-height: 450px;
+    resize: none;
+    line-height: 1;
+  }
+  
+  
+  aside.context {
+    color: #fff;
+    text-align: center;
+    a {
+      color: #fff;
+      text-decoration: none;
+      color: #111;
+      padding: 5px 0;
+      border-bottom: 1px dashed;
+      &:visited {
+        color: #fff;
+      }
+    }
+    .explanation {
+      max-width: 700px;
+      margin: 3em auto;
+    }
+  }
+  
+  footer {
+    text-align: center;
+    margin: 5em auto;
+    a {
+      text-decoration: none;
+      display: inline-block;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: transparent;
+          border: 1px dashed #fff;
+      color: #fff;
+      margin: 5px;
+      &:hover {
+        background: rgba(0,0,0,0.1);
+      }
+      .icons {
+        margin-top: 12px;
+        display: inline-block;
+        font-size: 20px;
+      }
+    }
+  }
+  
+  </style>
+  
+  <script>
+  var showText = function(target, message, index, interval) {
+    if (index < message.length) {
+      $(target).append(message[index++]);
+      setTimeout(function() {
+        showText(target, message, index, interval);
+      }, interval);
+    }
+  };
+  
+  $(document).ready(function() {
+    setTimeout(function() {
+      var text = $(".text-edit")
+        .html()
+        .replace(/<br *\/?>/gi, "\n");
+      showText("#msg", text, 0, 100);
+    }, 2000);
+  });
+  </script>
+  
+  <style>
+  .edit {
+    position: relative;
+    width: 5%;
+    height: 2rem;
+    margin: 2rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    border-radius: 3rem;
+    cursor: pointer;
+    overflow: hidden;
+    transition: width 0.3s 0.15s, font-size 0.1s 0.15s;
+  }
+  .remove {
+    position: relative;
+    width: 5%;
+    height: 2rem;
+      margin: 2rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    border-radius: 3rem;
+    cursor: pointer;
+    overflow: hidden;
+    transition: width 0.3s 0.15s, font-size 0.1s 0.15s;
+  }</style>
     
  
 {% if mine is True %}

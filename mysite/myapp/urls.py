@@ -12,4 +12,5 @@ urlpatterns = [
     path('commentcreate/<int:letter_id>', views.commentcreate, name='commentcreate'),
     path('getrandom/', views.getrandom, name='getrandom'),
     path('yoursort/<int:letter_id>', views.yoursort, name='yoursort'),
+    path('home/', views.home, name='home'),
 ]
