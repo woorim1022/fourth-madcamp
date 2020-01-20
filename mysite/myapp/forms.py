@@ -5,7 +5,17 @@ from emoji_picker.widgets import EmojiPickerTextInputAdmin, EmojiPickerTextareaA
 class LetterForm(forms.ModelForm): # PostForm이라는 이름의 모델폼 클래스 생성
     class Meta:
         model = Letter # form에서 사용할 모델이 Post임을 명시
-        fields = ['title','body','bgm']
+        fields = ['title','body']
+
+        widgets = {
+            'body': forms.Textarea(
+                attrs={
+                    'style': 'background-color:#00ff0000',
+                    'cols': '32.5',
+                    'rows' : '7',
+                }
+            )
+        }
 
 class CommentForm(forms.ModelForm):
     class Meta:

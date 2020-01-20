@@ -1,13 +1,242 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>myapp/write.html</h1>
+<style>@import url(https://fonts.googleapis.com/css?family=Cookie|Raleway:300,700,400);
+    *{
+        box-sizing: border-box;
+        font-size: 1em;
+        margin: 0;
+        padding: 0;
+    }
+    body{
+        
+        color: #333;
+        font-size: 18px;
+        font-family: 'Raleway', sans-serif;
+    }
+    .container{
+        border-radius: 0.5em;
+        box-shadow: 0 0 1em 0 rgba(51,51,51,0.25);
+        display: block;
+        max-width: 480px;
+        overflow: hidden;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        padding: 2em;
+        position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 1;
+        width: 98%;
+        height: 50vh;
+    }
+    .container:before{
+        content: '';
+        -webkit-filter: blur(0.3px);
+        filter: blur(0.3px);
+        height: 100vh;
+        position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: -1;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        width: 100vw;
+    }
+    .container:after{
+        background: rgba(255,255,255,0.6);
+        content: '';
+        display: block;
+        height: 100%;
+        position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        width: 100%;
+    }
+    form button.submit{
+        background: rgba(255,255,255,0.25);
+        border: 1px solid #333;
+        line-height: 1em;
+        padding: 0.5em 0.5em;
+        -webkit-transition: all 0.25s;
+        transition: all 0.25s;
+        font-size: x-large;
+        font-family: 'Cookie', cursive;
+    }
+    form button:hover,
+    form button:focus,
+    form button:active,
+    form button.loading{
+        background: #333;
+        color: #fff;
+        outline: none;
+    }
+    form button.success{
+        background: #27ae60;
+        border-color: #27ae60; 
+        color: #fff;
+    }
+    @-webkit-keyframes spin{
+        from{ transform: rotate(0deg); }
+        to{ transform: rotate(360deg); }
+    }
+    @keyframes spin{
+        from{ transform: rotate(0deg); }
+        to{ transform: rotate(360deg); }
+    }
+    form button span.loading-spinner{
+        -webkit-animation: spin 0.5s linear infinite;
+        animation: spin 0.5s linear infinite;
+        border: 2px solid #fff;
+        border-top-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        height: 1em;
+        width: 1em;
+    }
+    
+    form label{
+        border-bottom: 1px solid #333;
+        display: block;
+        font-size: 1.25em;
+        margin-bottom: 0.5em;
+        -webkit-transition: all 0.25s;
+        transition: all 0.25s;
+    }
+    form label.col-one-half{
+        float: left;
+        width: 50%;
+    }
+    form label.col-one-half:nth-of-type(even){
+        border-left: 1px solid #333;
+        padding-left: 0.25em;
+    }
+    form label input{
+        background: none;
+        border: none;
+        line-height: 1em;
+        font-weight: 300;
+        padding: 0.125em 0.25em;
+        width: 100%;
+    }
+    form label input:focus{
+        outline: none;
+    }
+    form label input:-webkit-autofill{
+        background-color: transparent !important;
+    }
+    form label span.label-text{
+        display: block;
+        font-size: 0.5em;
+        font-weight: bold;
+        padding-left: 0.5em;
+        text-transform: uppercase;
+        -webkit-transition: all 0.25s;
+        transition: all 0.25s;
+    }
+    form label.checkbox{
+        border-bottom: 0;
+        text-align: center;
+    }
+    form label.checkbox input{
+        display: none;
+    }
+    form label.checkbox span{
+        font-size: 0.5em;
+    }
+    form label.checkbox span:before{
+        content: '\e157';
+        display: inline-block;
+        font-family: 'Glyphicons Halflings';
+        font-size: 1.125em;
+        padding-right: 0.25em;
+        position: relative;
+            top: 1px;
+    }
+    form label.checkbox input:checked + span:before{content: '\e067';}
+    form label.invalid{border-color: #c0392b !important;}
+    form label.invalid span.label-text{color: #c0392b;}
+    form label.password{position: relative;}
+    form label.password button.toggle-visibility{
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 0.75em;
+        line-height: 1em;
+        position: absolute;
+            top: 50%;
+            right: 0.5em;
+        text-align: center;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        -webkit-transition: all 0.25s;
+        transition: all 0.25s;
+    }
+    form label.password button.toggle-visibility:hover,
+    form label.password button.toggle-visibility:focus,
+    form label.password button.toggle-visibility:active{
+        color: #000;
+        outline: none;
+    }
+    form label.password button.toggle-visibility span{vertical-align: middle;}
+    
+    h1{
+        font-size: 3em;
+        margin: 0 0 0.5em 0;
+        text-align: center;
+        font-family: 'Cookie', cursive;
+    }
+    h1 img{
+        height: auto;
+        margin: 0 auto;
+        max-width: 240px;
+        width: 100%;
+    }
+    html{
+        font-size: 18px;
+        height: 100%;
+    }
+    
+    .text-center{
+        text-align: center;
+    }</style>
 
-<form method='POST'> <!-- action이 없으면 현재 페이지의 url 사용 -->
-    {% csrf_token %} <!-- POST로 데이터를 넘기려면 반드시 csrf 토큰이 있어야 함 -->
-    <table>
-        {{form.as_table}} <!-- form을 담아서 new에 띄우는 부분 -->
-    </table>
-    <br>
-    <input type="submit" value="등록">
-</form>
+   <!-- POST로 데이터를 넘기려면 반드시 csrf 토큰이 있어야 함 -->
+        <!-- form을 담아서 new에 띄우는 부분 -->
+        
+
+
+
+
+<div class="container">
+   <header>
+   </header>
+   <h1 class="text-center">today's letter</h1>
+   <form class="registration-form"  method='POST' style="font-family: 'Cookie', cursive;">
+    {% csrf_token %}
+      <label>
+         {{form.title}}
+      </label>
+      <label class="password">
+         <button class="toggle-visibility" title="toggle password visibility" tabindex="-1">
+            <span class="glyphicon glyphicon-eye-close"></span>
+         </button>
+         {{form.body}}
+      </label>
+      <br>
+      <div class="text-center">
+         <button class="submit" type="submit" name="register">add</button>
+      </div>
+   </form>
+</div>
+
+
+
+
+
+
+
 {% endblock %}
