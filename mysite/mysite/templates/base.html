@@ -378,6 +378,7 @@ input, button {
 </script>
 
 <style>
+@import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
 .background_photo {
   display: flex;
   margin: 0;
@@ -385,10 +386,10 @@ input, button {
   background-size: cover;
   overflow: hidden;
 }
+
 </style>
 </head>
 <body class="background_photo">
-  <a class="nav-item nav-link" href="{% url 'home' %}">홈</a>
 
 {% if user.is_authenticated %}
 
@@ -461,13 +462,8 @@ input, button {
 </script>
 
 <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
-    aria-haspopup="true" aria-expanded="false">환영합니다. {{ user.username }} 님!</a>
-<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-  <a class="dropdown-item" href="javascript:{document.getElementById('logout').submit()}">로그아웃</a>
-  <form id="logout" method="POST" action="{% url 'logout' %}">
-    {% csrf_token %} <input type="hidden" />
-  </form>
-</div>
+    aria-haspopup="true" aria-expanded="false"></a>
+
 {% else %}
 
 <div class="'cont">
