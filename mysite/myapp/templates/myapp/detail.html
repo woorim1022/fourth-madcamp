@@ -171,7 +171,6 @@
     
  
 {% if mine is True %}
-<a href="{% url 'letterupdate' letter.id %}">수정하기</a>
 <a href="{% url 'letterdelete' letter.id %}" onclick="return confirm('정말 삭제하시겠습니까?')">삭제하기</a>
 {% endif %}
 
