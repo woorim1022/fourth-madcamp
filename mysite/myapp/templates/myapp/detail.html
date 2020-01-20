@@ -1,11 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load staticfiles %}
 
 <h1>title : {{letter.title}}</h1>
 <p>조회수 : {{letter.letter_hit}}</p>
 <p>date : {{letter.pub_date}}</p>
 <p>body : {{letter.body}}</p>
+<a href = "{{letter.bgm}}">추천곡 들으러 가기</a>
 
+
+    
+    
+ 
 {% if mine is True %}
 <a href="{% url 'letterupdate' letter.id %}">수정하기</a>
 <a href="{% url 'letterdelete' letter.id %}" onclick="return confirm('정말 삭제하시겠습니까?')">삭제하기</a>
@@ -21,6 +27,21 @@
         {{form}}
         <button type='submit'>답장 보내기</button>
     </form>
+    <!-- <form method='GET'>
+        <div style = "margin: 10; ">
+                <input  name="emoji" value="angry" type="checkbox"><img class="btn-img" width="20pt" height="20pt" src="{% static 'angry.png'%}"><a href=""></a></input>
+                <input  name="emoji" value="embarass" type="checkbox"><img class="btn-img" width="20pt" height="20pt" src="{% static 'embarass.png'%}"></input>
+                <input  name="emoji" value="funny" type="checkbox"><img class="btn-img" width="20pt" height="20pt" src="{% static 'funny.png'%}"></input>
+                <input  name="emoji" value="happy" type="checkbox"><img class="btn-img" width="20pt" height="20pt" src="{% static 'happy.png'%}"></input>
+                <br>
+                <input  name="emoji" value="love" type="checkbox"><img class="btn-img" width="20pt" height="20pt" src="{% static 'love.png'%}"></input>
+                <input  name="emoji" value="panic" type="checkbox"><img class="btn-img" width="20pt" height="20pt" src="{% static 'panic.png'%}"></input>
+                <input  name="emoji" value="sad" type="checkbox"><img class="btn-img" width="20pt" height="20pt" src="{% static 'sad.png'%}"></input>
+                <input  name="emoji" value="smile" type="checkbox"><img class="btn-img" width="20pt" height="20pt" src="{% static 'smile.png'%}"></input>
+        </div>
+        <input type="submit" value="Submit">
+    </form> -->
+
 {% endif %}
 
 <br/>

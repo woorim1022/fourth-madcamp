@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Letter
+from .models import Letter, Myhit
 from .forms import LetterForm, CommentForm
+import datetime
 # Create your views here.
 
 def home(request):
@@ -45,7 +46,7 @@ def letterupdate(request, letter_id):
         if form.is_valid():
             letter = form.save(commit=False)
             letter.save()
-            return redirect('read', letter_id=letter.pk) # 수정한 글의 상세 페이지로 돌아간다
+            return redirect('detail', letter_id=letter.pk) # 수정한 글의 상세 페이지로 돌아간다
     else:
         form = LetterForm(instance=letter) # post 객체에 이미 저장돼있는 것들을 form에 띄워둠
         return render(request, 'myapp/edit.html', {'form': form})
@@ -65,17 +66,66 @@ def commentcreate(request, letter_id):
             comment = form.save(commit=False)
             comment.letter = letter
             comment.save()
-            return redirect('detail', letter_id=letter.pk)
+            return redirect('home')
         else:
             redirect('showlist')
     else:
         form = CommentForm()
         return render(request, 'myapp/detail.html', {'form': form, 'letter': letter, 'mine':mine})
 
+def yoursort(request, letter_id):
+    letter = get_object_or_404(Letter, pk=letter_id)
+    if request.GET.get('angry'):
+        letter.angry += 1
+    if request.GET.get('embarass'):
+        letter.embarass += 1
+    if request.GET.get('funny'):
+        letter.funny += 1
+    if request.GET.get('happy'):
+        letter.happy += 1
+    if request.GET.get('love'):
+        letter.love += 1
+    if request.GET.get('panic'):
+        letter.panic += 1
+    if request.GET.get('sad'):
+        letter.sad += 1
+    if request.GET.get('smile'):
+        letter.smile += 1
+    letter.save()
+    mine = False
+    return render(request, 'myapp/detail.html', {'letter': letter, 'mine':mine})
+
 def getrandom(request):
+    d = datetime.date.today()
+    try: #지금 로그인한 유저가 다른사람의 글을 조회한적이 있다면
+        #해당 유저의 조회회수 객체 호출
+        myhit = Myhit.objects.get(hitter=request.user)
+    except: #지금 로그인한 유저가 다른사람의 글을 조회한적이 없으면
+        #조회횟수 데이터 객체 생성
+        myhit = Myhit(hitter=request.user, hit=0, date="0000-00-00 00:00:00")
+    #오늘날짜랑 같으면
+    date = str(myhit.date)
+    today = d.isoformat() + " 00:00:00"
+    if date==today:
+        #hit 3이면
+        if myhit.hit == 3:
+            #접근불가
+            return redirect('home')
+
+        #3미만이면
+        else:
+            #hit 1 증가
+            myhit.hit = myhit.hit + 1
+    #오늘날짜랑 다르면
+    else:
+        #오늘날짜 저장
+        myhit.date = today
+        #hit 1으로 초기화
+        myhit.hit = 1
+    myhit.save()
     letter = Letter.objects.order_by("?").first()
     letter.update_counter
     mine = False
     while letter.writer == request.user:
         letter = Letter.objects.order_by("?").first()
-    return render(request, 'myapp/detail.html', {'letter': letter, 'mine':mine})
+    return render(request, 'myapp/detail.html', {'letter': letter, 'mine':mine, 'date':date, 'today':today})

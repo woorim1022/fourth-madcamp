@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
+from emoji_picker.widgets import EmojiPickerTextInputAdmin, EmojiPickerTextareaAdmin
+
 
 # Create your models here.
 class Letter(models.Model):
@@ -8,6 +11,7 @@ class Letter(models.Model):
     pub_date = models.DateTimeField(auto_now_add=True)
     body = models.TextField(max_length=200)
     letter_hit = models.PositiveIntegerField(default=0)
+    bgm = models.URLField(max_length=200)
 
     def __str__(self):
         return self.title
@@ -28,3 +32,26 @@ class Comment(models.Model):
     
     def __str__(self):
         return self.content
+
+class Emogi(models.Model):
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    letter = models.ForeignKey(Letter, null=True, on_delete=models.CASCADE)
+    smile = models.PositiveIntegerField(default=0)
+    panic = models.PositiveIntegerField(default=0)
+    happy = models.PositiveIntegerField(default=0)
+    sad = models.PositiveIntegerField(default=0)
+    funny = models.PositiveIntegerField(default=0)
+    angry = models.PositiveIntegerField(default=0)
+    embarass = models.PositiveIntegerField(default=0)
+    love = models.PositiveIntegerField(default=0)
+
+
+
+
+
+class Myhit(models.Model):
+    hitter = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    hit = models.PositiveIntegerField(default=0)
+    date = models.DateTimeField(blank=True, null=True)
+
+   
