@@ -443,16 +443,24 @@ input, button {
                       //jQuery("<h3></h3>").html("● icon : " + resp.weather[0].icon).appendTo("body");
                       //jQuery("<h3></h3>").html("● 보여줄 날씨 : " + weatherResult).appendTo("body");
 
-                      switch(weatherResult) {
-                        case "clear day": document.body.style.backgroundImage = "url('{% static 'clear_night.jpg' %}')"; break;
-                        case "clear night": document.body.style.backgroundImage = "url('{% static 'clear_night.jpg' %}')"; break;
-                        case "cloudy day": document.body.style.backgroundImage = "url('{% static 'cloudy_day.jpg' %}')"; break;
-                        case "cloudy night": document.body.style.backgroundImage = "url('{% static 'rainy_night.gif' %}')"; break;
-                        case "rainy day": document.body.style.backgroundImage = "url('{% static 'rainy_day.gif' %}')"; break;
-                        case "rainy night": document.body.style.backgroundImage = "url('{% static 'rainy_night.gif' %}')"; break;
-                        case "snowy day": document.body.style.backgroundImage = "url('{% static 'clear_night.jpg' %}')"; break;
-                        case "snowy night": document.body.style.backgroundImage = "url('{% static 'clear_night.jpg' %}')"; break;
+                      // switch(weatherResult) {
+                      //   case "clear day": document.body.style.backgroundImage = "url('{% static 'clear_night.jpg' %}')"; break;
+                      //   case "clear night": document.body.style.backgroundImage = "url('{% static 'clear_night.jpg' %}')"; break;
+                      //   case "cloudy day": document.body.style.backgroundImage = "url('{% static 'cloudy_day.jpg' %}')"; break;
+                      //   case "cloudy night": document.body.style.backgroundImage = "url('{% static 'rainy_night.gif' %}')"; break;
+                      //   case "rainy day": document.body.style.backgroundImage = "url('{% static 'rainy_day.gif' %}')"; break;
+                      //   case "rainy night": document.body.style.backgroundImage = "url('{% static 'rainy_night.gif' %}')"; break;
+                      //   case "snowy day": document.body.style.backgroundImage = "url('{% static 'clear_night.jpg' %}')"; break;
+                      //   case "snowy night": document.body.style.backgroundImage = "url('{% static 'clear_night.jpg' %}')"; break;
+                      // }
+                      var ran = Math.floor(Math.random()*4);
+                      switch(ran) {
+                        case 0: document.body.style.backgroundImage = "url('{% static 'clear_night.jpg' %}')"; break;
+                        case 1: document.body.style.backgroundImage = "url('{% static 'cloudy_day.jpg' %}')"; break;
+                        case 2: document.body.style.backgroundImage = "url('{% static 'clear_night2.jpg' %}')"; break;
+                        case 3: document.body.style.backgroundImage = "url('{% static 'clear_night3.png' %}')"; break;
                       }
+
                       document.body.style.backgroundSize = "cover";
 
                   }

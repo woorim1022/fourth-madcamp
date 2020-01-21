@@ -112,7 +112,7 @@ def getrandom(request):
     today = d.isoformat() + " 00:00:00"
     if date==today:
         #hit 3이면
-        if myhit.hit == 3:
+        if myhit.hit == 30:
             #접근불가
             return redirect('home')
 

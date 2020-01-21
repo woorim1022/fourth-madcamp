@@ -2,10 +2,10 @@
 {% block content %}
 {% load staticfiles %}
 
-<a href = "{{letter.bgm}}">추천곡 들으러 가기</a>
 
 <div class="content">
     <div class="notebook-page">
+        <textarea id="msg"></textarea>
       <div class="text-edit">{{letter.title}}<br/><br/>{{letter.body}}<br/>조회수 : {{letter.letter_hit}} <br/>{{letter.pub_date}}</div>
     </div>
   </div>
@@ -22,6 +22,7 @@
     min-height: 300px;
     resize: none;
     line-height: 1.75;
+    visibility:hidden;
     }
   
   .content {
@@ -42,9 +43,9 @@
     left:60%;
   
     min-width:360px;
-    min-height: 300px;
+    min-height: 00px;
     box-shadow: 0 9px 20px rgba(0, 0, 0, 0.1);
-    
+
     &:after {
       content: "";
       position: absolute;
@@ -60,14 +61,16 @@
   }
   
   textarea#msg {
-    background: none;
-    border: none;
-    color: #333;
-    font-size: 24px;
-    min-height: 450px;
-    resize: none;
-    line-height: 1;
-  }
+
+background: none;
+border: none;
+color: #333;
+font-size: 30px;
+min-height: 300px;
+resize: none;
+line-height: 1;
+font-family: 'Nanum Pen Script', cursive;
+}
   
   
   aside.context {
@@ -136,47 +139,245 @@
   </script>
   
   <style>
-  .edit {
+  @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+  .remove {
     position: relative;
-    width: 5%;
+    width: 5.5%;
     height: 2rem;
-    margin: 2rem;
+      top: 6.9%;
     color: rgba(255, 255, 255, 0.8);
-    font-size: 1rem;
     border-radius: 3rem;
+    font-size:1.4rem;
+
+  }
+  
+  .reply {
+    font-family: 'Nanum Pen Script', cursive;
+    position: relative;
+    margin-top:2.3rem;
+    width: 1%;
+    height: 2rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.4rem;
     cursor: pointer;
     overflow: hidden;
     transition: width 0.3s 0.15s, font-size 0.1s 0.15s;
   }
-  .remove {
+  .reply2 {
+    margin-top:2.3rem;
+    font-family: 'Nanum Pen Script', cursive;
     position: relative;
-    width: 5%;
+    width: 15%;
     height: 2rem;
-      margin: 2rem;
     color: rgba(255, 255, 255, 0.8);
-    font-size: 1rem;
-    border-radius: 3rem;
+    font-size: 1.8rem;
     cursor: pointer;
-    overflow: hidden;
     transition: width 0.3s 0.15s, font-size 0.1s 0.15s;
-  }</style>
+    
+  }
+  .sendreply{
+    margin-top:2.8rem;
+    margin-right: 3.5rem;
+    font-family: 'Nanum Pen Script', cursive;
+    position: relative;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.8rem;
+    text-decoration: none;
+    
+  }
+  .aaaa{
+    margin-top:2.5rem;
+    
+    font-family: 'Nanum Pen Script', cursive;
+    position: relative;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: width 0.3s 0.15s, font-size 0.1s 0.15s;
+    
+  }
+  .bbbb{
+    margin-right: 20.2rem;
+    font-family: 'Nanum Pen Script', cursive;
+    position: relative;
+    color: #555;
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: width 0.3s 0.15s, font-size 0.1s 0.15s;
+    
+  }
+  
+  
+  </style>
     
  
 {% if mine is True %}
-<a href="{% url 'letterupdate' letter.id %}">수정하기</a>
-<a href="{% url 'letterdelete' letter.id %}" onclick="return confirm('정말 삭제하시겠습니까?')">삭제하기</a>
+<a class = "remove" href="{% url 'letterdelete' letter.id %}" onclick="return confirm('정말 삭제하시겠습니까?')">삭제하기</a>
+<nav>
+    <a class="nav-item nav-link" href="{% url 'home' %}">홈</a>
+      <a class="dropdown-item" href="javascript:{document.getElementById('logout').submit()}">로그아웃</a>
+
+    <a class="write" href="{% url 'lettercreate' %}">글 쓰기</a>
+    <a class="mine" href="{% url 'showlist' %}">내 글</a>
+  <div id="indicator"></div>
+      <form id="logout" method="POST" action="{% url 'logout' %}">
+    {% csrf_token %} <input type="hidden" />
+  </form>
+</nav>
+<style>html, body
+{
+    height: 100%;
+}
+
+body
+{
+    margin: 0;
+    background-color: #292929;
+    overflow: hidden;
+}
+
+nav
+{
+    position: absolute;
+    top: 5%;
+    right: 0;
+    left: 25%;
+    width: 600px;
+    display: table;
+    margin: 0 auto;
+    transform: translateY(-50%);
+}
+
+nav a
+{
+    position: relative;
+    width: 20%;
+    display: table-cell;
+    text-align: center;
+    color: #949494;
+    text-decoration: none;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    padding: 10px 20px;
+    transition: 0.2s ease color;
+}
+
+nav a:before, nav a:after
+{
+    content: "";
+    position: absolute;
+    border-radius: 25%;
+    transform: scale(0);
+    transition: 0.2s ease transform;
+}
+
+nav a:before
+{
+    top: 0;
+    left: 10px;
+    width: 6px;
+    height: 6px;
+}
+
+nav a:after
+{
+    top: 5px;
+    left: 18px;
+    width: 4px;
+    height: 4px
+}
+
+nav a:nth-child(1):before
+{
+    background-color: yellow;
+}
+
+nav a:nth-child(1):after
+{
+    background-color: red;
+}
+
+nav a:nth-child(2):before
+{
+    background-color: #00e2ff;
+}
+
+nav a:nth-child(2):after
+{
+    background-color: #89ff00;
+}
+
+nav a:nth-child(3):before
+{
+    background-color: purple;
+}
+
+nav a:nth-child(3):after
+{
+    background-color: palevioletred;
+}
+
+nav a:nth-child(4):before
+{
+    background-color: red;
+}
+
+nav a:nth-child(4):after
+{
+    background-color: #111;
+}
+
+#indicator
+{
+    position: absolute;
+    left: 5%;
+    bottom: 0;
+    width: 30px;
+    height: 3px;
+    background-color: #fff;
+    border-radius: 5px;
+    transition: 0.2s ease left;
+}
+
+nav a:hover
+{
+    color: #fff;
+}
+
+nav a:hover:before, nav a:hover:after
+{
+    transform: scale(1);
+}
+
+nav a:nth-child(1):hover ~ #indicator
+{
+    background: linear-gradient(130deg, yellow, red);
+}
+
+nav a:nth-child(2):hover ~ #indicator
+{
+    left: 23%;
+    background: linear-gradient(130deg, #00e2ff, #89ff00);
+}
+
+nav a:nth-child(3):hover ~ #indicator
+{
+    left: 45%;
+    background: linear-gradient(130deg, purple, palevioletred);
+}
+nav a:nth-child(4):hover ~ #indicator
+{
+    left: 63%;
+    background: linear-gradient(130deg, red, #111);
+}
+
+
+</style>
 {% endif %}
 
 <br/>
 <br/>
 <br/>
-{% if mine is False %}
-    <a href="{% url 'commentcreate' letter.id %}">답장하기</a>
-    <form method='POST'>
-        {% csrf_token %}
-        {{form}}
-        <button type='submit'>답장 보내기</button>
-    </form>
     <!-- <form method='GET'>
         <div style = "margin: 10; ">
                 <input  name="emoji" value="angry" type="checkbox"><img class="btn-img" width="20pt" height="20pt" src="{% static 'angry.png'%}"><a href=""></a></input>
@@ -192,16 +393,9 @@
         <input type="submit" value="Submit">
     </form> -->
 
-{% endif %}
 
 <br/>
 <br/>
-{% if mine is True %}
-    <h4>답장 목록</h4>
-        {% for comment in letter.comment_set.all %}
-            {{ comment.content }}<br/>
-        {% endfor %}
-{% endif %}
 
 
 {% endblock %}
