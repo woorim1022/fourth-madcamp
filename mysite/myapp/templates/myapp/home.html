@@ -1,5 +1,126 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
+
+<style>
+  @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+  body {
+    background: #111;
+  
+  }
+  .text-edit{
+    font-family: 'Nanum Pen Script', cursive;
+      font-size: 28px;
+    min-height: 300px;
+    resize: none;
+    line-height: 1.75;
+    }
+  
+  .content {
+    margin: 3em auto;
+    max-width: 500px;
+  }
+
+  .plane {
+    background-image: url("{% static 'send.png' %}");
+    background-size: auto 100%;
+    width: 100px;
+    height: 100px;
+    position: absolute;	
+  }
+
+.plane-container {
+	position: absolute;
+	top: 20%;
+	left: -10%;
+	transform: rotate(30deg);
+	will-change: transform;
+	
+	animation-name: fly-right-one;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+
+    animation-duration: 15s;
+	animation-delay: 0;
+}
+
+@keyframes fly-right-one {
+	
+	0% {
+		transform: scale(0.3) translateX(-10vw) rotate(30deg);
+	}
+	10% {
+		transform: translateY(4vh) translateX(10vw) scale(0.4) rotate(40deg);
+	}
+	20% {
+		transform: translateY(0vh) translateX(30vw) scale(0.5) rotate(40deg);
+	}
+	30% {
+		transform: translateY(8vh) translateX(50vw) scale(0.6) rotate(20deg);
+	}
+	40% {
+		transform: translateY(4vh) translateX(70vw) scale(0.6) rotate(30deg);
+	}
+	50% {
+		transform: translateY(0vh) translateX(90vw) scale(0.4) rotate(30deg);
+	}
+	60% {
+		transform: translateY(4vh) translateX(110vw) scale(0.6) rotate(40deg);
+	}
+    70% {
+		transform: translateY(8vh) translateX(130vw) scale(0.5) rotate(40deg);
+	}
+    80% {
+		transform: translateY(0vh) translateX(150vw) scale(0.6) rotate(20deg);
+	}
+	90% {
+		transform: translateY(4vh) translateX(160vw) scale(0.7) rotate(20deg);
+	}
+    100% {
+		transform: translateY(0vh) translateX(170vw) scale(0.6) rotate(30deg);
+	}
+	
+}
+
+@keyframes fly-right-two {
+	
+	0% {
+		transform: translateY(-4vh) translateX(-10vw) scale(0.5) rotate(30deg);
+	}
+	10% {
+		transform: translateY(0vh) translateX(5vw) scale(0.4) rotate(30deg);
+	}
+	20% {
+		transform: translateY(-8vh) translateX(20vw) scale(0.6) rotate(20deg);
+	}
+	30% {
+		transform: translateY(2vh) translateX(35vw) scale(0.45) rotate(20deg);
+	}
+	40% {
+		transform: translateY(-5vh) translateX(50vw) scale(0.5) rotate(40deg);
+	}
+	50% {
+		transform: translateY(0vh) translateX(65vw) scale(0.45) rotate(30deg);
+	}
+    60% {
+		transform: translateY(-4vh) translateX(80vw) scale(0.5) rotate(30deg);
+	}
+    70% {
+		transform: translateY(-6vh) translateX(95vw) scale(0.45) rotate(40deg);
+	}
+    80% {
+		transform: translateY(0vh) translateX(110vw) scale(0.4) rotate(40deg);
+	}
+    90% {
+		transform: translateY(2vh) translateX(125vw) scale(0.45) rotate(40deg);
+	}
+	100% {
+		transform: translateY(0vh) translateX(140vw) scale(0.45) rotate(30deg);
+	}
+	
+}
+</style>
+
 <html>
 <head>
 <title>새벽갬성전파</title>
@@ -9,13 +130,35 @@
 {% if user.is_authenticated %}
     <a  href="{% url 'lettercreate' %}">글 쓰기</a><br>
     <a  href="{% url 'showlist' %}">내 글들 보기</a><br>
-    <a  href="{% url 'getrandom'  %}">다른사람이 보낸 글 보기</a><br>
+    <!-- <a  href="{% url 'getrandom'  %}">다른사람이 보낸 글 보기</a><br> -->
+
+    <div class="content">
+        {% for letter in letters.all %}
+        <a href="/myapp/getrandom/">
+            <div class="plane-container" id="plane-container{{letter.id}}"><div class="plane"></div></div>
+        </a>
+        {% endfor %}
+    </div>
+    
+    <script>
+        var planes = document.getElementsByClassName("plane-container");
+    
+        for(var i=0;i<planes.length;i++) {
+            var plane = planes.item(i);
+            plane.style.top = Math.round(Math.random()*90)+"%";
+            plane.style.left = (Math.round(Math.random()*20)-25)+"%";
+    
+            if(Math.round(Math.random()*100) >= 50) {
+                plane.style.animationName = "fly-right-one";
+            } else {
+                plane.style.animationName = "fly-right-two";
+            }
+            plane.style.animationDuration = (Math.random()*5+13)+"s";
+            plane.style.animationDelay = (Math.random()*20)+"s";
+        }
+    </script>
 {% endif %}
 </body>
 
 </html>
 {% endblock %}
-
-
-
-

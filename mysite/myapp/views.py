@@ -5,7 +5,8 @@ import datetime
 # Create your views here.
 
 def home(request):
-    return render(request, 'myapp/home.html')
+    letters = Letter.objects.filter()
+    return render(request, 'myapp/home.html', {'letters' : letters})
 
 
 def showlist(request):
