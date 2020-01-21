@@ -2,7 +2,6 @@
 {% block content %}
 {% load staticfiles %}
 
-<a href = "{{letter.bgm}}">추천곡 들으러 가기</a>
 
 <div class="content">
     <div class="notebook-page">
@@ -163,7 +162,6 @@
     
  
 {% if mine is True %}
-<a href="{% url 'letterupdate' letter.id %}">수정하기</a>
 <a href="{% url 'letterdelete' letter.id %}" onclick="return confirm('정말 삭제하시겠습니까?')">삭제하기</a>
 {% endif %}
 

@@ -45,6 +45,10 @@ class Emogi(models.Model):
     love = models.PositiveIntegerField(default=0)
 
 
+class Mywrite(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    writecount = models.PositiveIntegerField(default=0)
+    date = models.DateTimeField(blank=True, null=True)
 
 
 
